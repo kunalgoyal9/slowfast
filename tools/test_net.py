@@ -112,6 +112,7 @@ def perform_test(test_loader, model, test_meter, cfg):
 
 
 def test(cfg):
+    print("test flag\n")
     """
     Perform multi-view testing on the pretrained video model.
     Args:
