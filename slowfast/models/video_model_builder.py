@@ -105,6 +105,9 @@ class FuseFastToSlow(nn.Module):
             norm_module (nn.Module): nn.Module for the normalization layer. The
                 default is nn.BatchNorm3d.
         """
+
+        print("dim_in: ", dim_in)
+        
         super(FuseFastToSlow, self).__init__()
         self.conv_f2s = nn.Conv3d(
             dim_in,
