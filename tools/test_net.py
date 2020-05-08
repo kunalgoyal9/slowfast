@@ -50,6 +50,9 @@ def perform_test(test_loader, model, test_meter, cfg):
 
         # Transfer the data to the current GPU device.
         labels = labels.cuda()
+        
+        print("labels: ",labels)
+        
         video_idx = video_idx.cuda()
         for key, val in meta.items():
             if isinstance(val, (list,)):
@@ -81,8 +84,11 @@ def perform_test(test_loader, model, test_meter, cfg):
             test_meter.log_iter_stats(None, cur_iter)
         else:
             # Perform the forward pass.
+            print(len(inputs))
             preds = model(inputs)
-
+            print("**"*100)
+            print(preds.shape)
+            
             # Gather all the predictions across all the devices to perform ensemble.
             if cfg.NUM_GPUS > 1:
                 preds, labels, video_idx = du.all_gather(

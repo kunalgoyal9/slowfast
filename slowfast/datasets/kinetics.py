@@ -69,6 +69,9 @@ class Kinetics(torch.utils.data.Dataset):
             self._num_clips = (
                 cfg.TEST.NUM_ENSEMBLE_VIEWS * cfg.TEST.NUM_SPATIAL_CROPS
             )
+            print("cfg.TEST.NUM_ENSEMBLE_VIEWS: ", cfg.TEST.NUM_ENSEMBLE_VIEWS)
+            
+            print("cfg.TEST.NUM_SPATIAL_CROPS: ",cfg.TEST.NUM_SPATIAL_CROPS)
 
         logger.info("Constructing Kinetics {}...".format(mode))
         self._construct_loader()
@@ -83,14 +86,20 @@ class Kinetics(torch.utils.data.Dataset):
         assert PathManager.exists(path_to_file), "{} dir not found".format(
             path_to_file
         )
+        
+        print("self.cfg.DATA.PATH_TO_DATA_DIR: ",path_to_file)
 
         self._path_to_videos = []
         self._labels = []
         self._spatial_temporal_idx = []
         with PathManager.open(path_to_file, "r") as f:
             for clip_idx, path_label in enumerate(f.read().splitlines()):
+                print("path_label: ", path_label)
+                print((path_label.split()))
                 assert len(path_label.split()) == 2
                 path, label = path_label.split()
+                
+                print("self._num_clips",self._num_clips)
                 for idx in range(self._num_clips):
                     self._path_to_videos.append(
                         os.path.join(self.cfg.DATA.PATH_PREFIX, path)
